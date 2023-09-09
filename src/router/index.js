@@ -1,6 +1,7 @@
 import {createRouter,createWebHistory} from 'vue-router'
 
 import Home from "@/views/Home.vue";
+import User from "@/views/News.vue";
 
 // 这个名字一定要叫routes不能为其他名称，否则报错
 const routes = [
@@ -8,6 +9,11 @@ const routes = [
         path: "/",
         name: 'home',
         component: Home,
+    },
+    {
+        path: "/user",
+        name: 'User',
+        component: User,
     }
 ]
 
