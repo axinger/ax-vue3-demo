@@ -21,6 +21,8 @@ let games = ['王者荣耀', '糖豆人', '穿越火线']
 <template>
 
   <div>
+
+
     <header>
       插槽<br>
       <slot name="p1"></slot>
@@ -43,11 +45,18 @@ let games = ['王者荣耀', '糖豆人', '穿越火线']
 
     </section>
 
+
     <footer>
       插槽2<br>
       <slot name="p2"></slot>
     </footer>
   </div>
+
+
+  <teleport to="#main">
+    <div>传送值123</div>
+  </teleport>
+
 </template>
 
 <style scoped>

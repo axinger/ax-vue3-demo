@@ -4,6 +4,9 @@ import News from "@/views/News.vue";
 import {useRouter} from "vue-router";
 import Order from "@/views/Order.vue";
 import Details from "@/views/Details.vue";
+import A from "@/views/A.vue";
+import C from "@/views/C.vue";
+import B from "@/views/B.vue";
 
 
 let name = "ji"
@@ -120,6 +123,31 @@ const changeOrder = (val) => {
 }
 
 let toSub = ref(220)
+
+
+let tableList = reactive([
+  {name: 'A', com: markRaw(A)},
+  {name: 'B', com: markRaw(B)},
+  {name: 'C', com: markRaw(C)},
+
+])
+
+let currentTab = reactive({
+  com: tableList[0].com
+})
+const changeIndex = (index) => {
+  currentTab.com = tableList[index].com
+}
+
+// 注入
+let proObj = ref(100)
+
+provide('order-value',proObj)
+
+const proObjEvent=()=>{
+  proObj.value++
+}
+
 </script>
 
 <template>
@@ -160,6 +188,13 @@ let toSub = ref(220)
 
 
   <el-row>
+    <div id="main">
+      传送必须在子组件前,才有效:
+    </div>
+  </el-row>
+
+
+  <el-row>
     <Details>
 
       <template v-slot:p1>
@@ -170,7 +205,6 @@ let toSub = ref(220)
       <template #p2>
         插槽传值2
       </template>
-
 
 
       <template v-slot="{user}">
@@ -188,9 +222,49 @@ let toSub = ref(220)
         <div v-for="(item,index) in games" :key="index">{{ item }}</div>
       </template>
 
-
     </Details>
   </el-row>
+
+
+  <el-divider/>
+  <h2 style="color: red">动态组件</h2><br>
+  <el-row>
+    <el-button v-for="(item,index) in tableList" :key="index" @click="changeIndex(index)">点击{{ item.name }}
+    </el-button>
+    <br>
+  </el-row>
+  <keep-alive>
+    <component :is="currentTab.com"></component>
+  </keep-alive>
+  <br>
+
+  <el-divider/>
+  <h2 style="color: red">异步组件</h2><br>
+
+
+  <el-divider/>
+  <h2 style="color: red">Mixin混入,同一个js代码中的变量不会互相影响</h2><br>
+  <el-row>
+    <A style="background-color: #535bf2"></A>
+    <B style="background-color: orchid"></B>
+  </el-row>
+
+
+  <el-divider/>
+  <h2 style="color: red">依赖注入,用于父子,子父传值,类似pinia </h2><br>
+  <el-row>
+    <el-button @click="proObjEvent">点击</el-button>
+    <A style="background-color: #535bf2"></A>
+  </el-row>
+
+  <el-divider/>
+  <h2 style="color: red">pinia </h2><br>
+  <el-row>
+    <A style="background-color: #535bf2"></A>
+    <B style="background-color: orchid"></B>
+  </el-row>
+
+
 </template>
 
 <style scoped>
