@@ -1,7 +1,9 @@
 <script setup>
 // import {ref, reactive} from "vue"; // 使用插件
-
-import router from "@/router/index.js";
+import News from "@/views/News.vue";
+import {useRouter} from "vue-router";
+import Order from "@/views/Order.vue";
+import Details from "@/views/Details.vue";
 
 
 let name = "ji"
@@ -68,21 +70,18 @@ const btn = () => {
   b3 = b3 + 10
 }
 
-// let router = useRouter()
+let router = useRouter()
 // let route = useRoute()
 const go = () => {
   router.push("/user?name=jim")
-
-
 }
 
 //生命周期
+
 onBeforeMount(() => {
   //用来请求接口
   console.log('onBeforeMount=')
 })
-
-
 
 onMounted(() => {
   // 用来获取dom
@@ -115,6 +114,12 @@ onActivated(() => {
 // onDestroy(()=>{
 //   console.log('onDestroy=')
 // })
+
+const changeOrder = (val) => {
+  console.log('子父传值=' + (val))
+}
+
+let toSub = ref(220)
 </script>
 
 <template>
@@ -142,6 +147,50 @@ onActivated(() => {
   <router-link to="/user">router-link</router-link>
   <br>
 
+
+  父子传值: {{ toSub }}
+  <!--  <News :msg="toSub"  @change-order="changeOrder"></News>-->
+  <!--  父子双向传值-->
+
+
+  <el-row>
+    <News v-model:msg=toSub @change-order="changeOrder" style="background-color: #535bf2"></News>
+    <Order style="background-color: red"></Order>
+  </el-row>
+
+
+  <el-row>
+    <Details>
+
+      <template v-slot:p1>
+        插槽传值1
+      </template>
+
+      <!--      简写插槽 #名称-->
+      <template #p2>
+        插槽传值2
+      </template>
+
+
+
+      <template v-slot="{user}">
+        {{ user.id }} -- {{ user.name }}
+      </template>
+
+
+      <!-- 直接解构组件MyTest 返回的数据-->
+      <template v-slot:info="{ msg, info }">
+        <p>{{ msg }}</p>
+        <p>{{ info.address }}</p>
+      </template>
+
+      <template v-slot:games="{games}">
+        <div v-for="(item,index) in games" :key="index">{{ item }}</div>
+      </template>
+
+
+    </Details>
+  </el-row>
 </template>
 
 <style scoped>
