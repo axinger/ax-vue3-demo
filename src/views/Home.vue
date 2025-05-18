@@ -57,7 +57,7 @@
 
   <el-row>
     <News v-model:msg=toSub @change-order="changeOrder" style="background-color: #535bf2"></News>
-    <Order style="background-color: red"></Order>
+<!--    <Order style="background-color: red"></Order>-->
   </el-row>
 
 
@@ -316,7 +316,7 @@ const changeOrder = (val) => {
   console.log('子父传值=' + (val))
 }
 
-let toSub = ref(220)
+let toSub = ref(0)
 
 
 let tableList = reactive([

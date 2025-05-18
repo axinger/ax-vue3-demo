@@ -4,7 +4,7 @@ import path from "path"
 import AutoImport from 'unplugin-auto-import/vite' // 自动导入 ref等
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,6 +16,9 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver()],
+    }),
+    codeInspectorPlugin({
+      bundler: 'vite',
     }),
   ],
   resolve: {
